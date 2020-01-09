@@ -20,6 +20,7 @@ import com.squareup.wire.schema.MessageType.Companion.fromElement
 import com.squareup.wire.schema.internal.parser.EnumElement
 import com.squareup.wire.schema.internal.parser.MessageElement
 import com.squareup.wire.schema.internal.parser.TypeElement
+import kotlin.jvm.JvmStatic
 
 abstract class Type {
   abstract val location: Location
@@ -47,7 +48,7 @@ abstract class Type {
       return when (type) {
         is EnumElement -> fromElement(protoType, type)
         is MessageElement -> fromElement(packageName, protoType, type)
-        else -> throw IllegalArgumentException("unexpected type: ${type.javaClass}")
+        else -> throw IllegalArgumentException("unexpected type: $type")
       }
     }
 
@@ -65,7 +66,7 @@ abstract class Type {
         is EnumType -> type.toElement()
         is MessageType -> type.toElement()
         is EnclosingType -> type.toElement()
-        else -> throw IllegalArgumentException("unexpected type: ${type.javaClass}")
+        else -> throw IllegalArgumentException("unexpected type: $type")
       }
     }
 
