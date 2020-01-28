@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Square, Inc.
+ * Copyright 2020 Square Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.squareup.wire.schema
+package squareup.protos.usesany;
 
-class ClaimedDefinitions {
-  private val set = mutableSetOf<ProtoType>()
+option java_package = "com.squareup.wire.protos.usesany";
 
-  fun claim(type: ProtoType) {
-    set.add(type)
-  }
+import "google/protobuf/any.proto";
 
-  fun claim(type: Type) {
-    claim(type.type)
-  }
-
-  fun claim(service: Service) {
-    claim(service.type())
-  }
-
-  operator fun contains(type: ProtoType) = set.contains(type)
-
-  operator fun contains(type: Type) = contains(type.type)
-
-  operator fun contains(service: Service) = contains(service.type())
+message UsesAny {
+  optional google.protobuf.Any just_one = 1;
+  repeated google.protobuf.Any many_anys = 2;
 }

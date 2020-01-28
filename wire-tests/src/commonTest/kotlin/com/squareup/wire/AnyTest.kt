@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Square, Inc.
+ * Copyright 2019 Square Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.squareup.wire.schema
+package com.squareup.wire
 
-class ClaimedDefinitions {
-  private val set = mutableSetOf<ProtoType>()
+import com.squareup.wire.protos.usesany.UsesAny
+import kotlin.test.Test
 
-  fun claim(type: ProtoType) {
-    set.add(type)
+class AnyTest {
+  @Test fun happyPath() {
+    var usesAny = UsesAny(
+        just_one = AnyMessage(type_url = "type.googleapis.com/a.Message"),
+        many_anys = listOf(
+            AnyMessage(type_url = "type.googleapis.com/a.OtherMessage"),
+            AnyMessage(type_url = "type.googleapis.com/a.YetAnotherMessage")))
   }
-
-  fun claim(type: Type) {
-    claim(type.type)
-  }
-
-  fun claim(service: Service) {
-    claim(service.type())
-  }
-
-  operator fun contains(type: ProtoType) = set.contains(type)
-
-  operator fun contains(type: Type) = contains(type.type)
-
-  operator fun contains(service: Service) = contains(service.type())
 }
+

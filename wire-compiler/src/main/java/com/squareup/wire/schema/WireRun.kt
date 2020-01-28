@@ -182,6 +182,7 @@ data class WireRun(
       }
 
       val claimedDefinitions = ClaimedDefinitions()
+      claimedDefinitions.claim(ProtoType.ANY)
 
       val targetsExclusiveLast = targets.sortedBy { it.exclusive }
       for (target in targetsExclusiveLast) {
